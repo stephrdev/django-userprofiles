@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <h1>Registration</h1>
+        {% if account %}
+        <p>We activated your account. You are now able to log in. Have fun!</p>
+        {% else %}
+        <p>The submitted activation code is invalid. Activation is not possible.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
