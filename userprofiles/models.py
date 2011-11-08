@@ -1,6 +1,7 @@
 import re
 import random
 from datetime import datetime, timedelta
+import uuid
 
 from django.db import models
 from django.conf import settings
@@ -71,7 +72,7 @@ if up_settings.USERPROFILES_USE_ACCOUNT_VERIFICATION:
 
         def create_verification(self, user):
             salt = sha_constructor(str(random.random())).hexdigest()[:5]
-            activation_key = sha_constructor(salt + user.username).hexdigest()
+            activation_key = sha_constructor(salt + str(uuid.uuid4())).hexdigest()
             return self.create(user=user,
                                activation_key=activation_key)
 
