@@ -8,7 +8,8 @@ if up_settings.USERPROFILES_USE_ACCOUNT_VERIFICATION:
     from userprofiles.models import AccountVerification
 
 class RegistrationForm(forms.Form):
-    username = forms.CharField(label=_('Username'), required=True)
+    username = forms.RegexField(label=_("Username"), max_length=30, regex=r'^[\w.@+-]+$',
+        error_messages = {'invalid': _('This value may contain only letters, numbers and @/./+/-/_ characters.')})
 
     email = forms.EmailField(label=_('E-Mail'))
     email_repeat = forms.EmailField(label=_('E-Mail (again)'), required=True)
@@ -37,7 +38,7 @@ class RegistrationForm(forms.Form):
     def clean_username(self):
         if User.objects.filter(username__iexact=self.cleaned_data['username']):
             raise forms.ValidationError(
-                _(u'This username is already in use. Please supply a different username.'))
+                _(u'A user with that username already exists.'))
 
         return self.cleaned_data['username']
 
