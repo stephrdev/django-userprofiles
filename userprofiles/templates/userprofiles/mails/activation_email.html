@@ -1,7 +1,7 @@
-Thank you for creating an account.
+{% load i18n %}{% url userprofiles_registration_activate activation_key as activation_url %}{% blocktrans with url=activation_url domain=site.domain %}Thank you for creating an account.
 
 Please click on the following link to activate your account:
 
-http://{{ site.domain }}{% url userprofiles_registration_activate activation_key %}
+http://{{ domain }}{{ url }}
 
-Cheers,
+Cheers!{% endblocktrans %}
