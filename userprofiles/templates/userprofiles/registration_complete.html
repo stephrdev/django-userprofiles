@@ -3,19 +3,18 @@
 {% block title %}Registration{% endblock %}
 
 {% block content %}
-    <div class="content">
-        <h1>Registration</h1>
+    <h1>Registration</h1>
+
+    {% if account_verification_active %}
         <p>
-        {% if account_verification_active %}
-            Your registration was successful. We send you a e-mail including
-            a link.<br />
+            Your registration was successful. We send you a e-mail including a link.<br />
             Please click the link to activate your account. Thank you!<br />
             <br />
             The link is valid for {{ expiration_days }} days.
-        {% else %}
-            Your registration was successful.
-        {% endif %}
         </p>
-    </div>
+    {% else %}
+        <p>
+            Your registration was successful.
+        </p>
+    {% endif %}
 {% endblock %}
-

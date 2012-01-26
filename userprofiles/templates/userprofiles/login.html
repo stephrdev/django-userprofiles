@@ -3,20 +3,19 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <div class="content">
-        <h1>Login</h1>
-        <form action="." method="post">
-            {% csrf_token %}
-            <fieldset>
-                {{ form.as_p }}
-            </fieldset>
-            <fieldset class="submit-row">
-                <p><button type="submit">Login</button></p>
-                <ul>
-                    <li><a href="{% url userprofiles_registration %}">No account? Register here.</a></li>
-                    <li><a href="{% url auth_password_reset %}">No Password? Reset your password here.</a></li>
-                </ul>
-            </fieldset>
-        </form>
-    </div>
+    <h1>Login</h1>
+
+    <form action="." method="post">
+        {% csrf_token %}
+        <fieldset>
+            {{ form.as_p }}
+        </fieldset>
+        <fieldset class="submit-row">
+            <p><button type="submit">Login</button></p>
+            <ul>
+                <li><a href="{% url userprofiles_registration %}">No account? Register here.</a></li>
+                <li><a href="{% url auth_password_reset %}">No Password? Reset your password here.</a></li>
+            </ul>
+        </fieldset>
+    </form>
 {% endblock %}
