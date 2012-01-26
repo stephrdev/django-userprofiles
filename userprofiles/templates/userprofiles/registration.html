@@ -1,17 +1,18 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Registration{% endblock %}
+{% block title %}{% trans "Registration" %}{% endblock %}
 
 {% block content %}
     <div class="content">
-        <h1>Registration</h1>
+        <h1>{% trans "Registration" %}</h1>
         <form action="." method="post">
             {% csrf_token %}
             <fieldset>
                 {{ form.as_p }}
             </fieldset>
             <fieldset class="submit-row">
-                <p><button type="submit">Create account</button></p>
+                <p><button type="submit">{% trans "Create account" %}</button></p>
             </fieldset>
         </form>
 </div>

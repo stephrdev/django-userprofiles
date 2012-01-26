@@ -1,20 +1,21 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{% trans "Login" %}{% endblock %}
 
 {% block content %}
     <div class="content">
-        <h1>Login</h1>
+        <h1>{% trans "Login" %}</h1>
         <form action="." method="post">
             {% csrf_token %}
             <fieldset>
                 {{ form.as_p }}
             </fieldset>
             <fieldset class="submit-row">
-                <p><button type="submit">Login</button></p>
+                <p><button type="submit">{% trans "Login" %}</button></p>
                 <ul>
-                    <li><a href="{% url userprofiles_registration %}">No account? Register here.</a></li>
-                    <li><a href="{% url auth_password_reset %}">No Password? Reset your password here.</a></li>
+                    <li><a href="{% url userprofiles_registration %}">{% trans "No account? Register here." %}</a></li>
+                    <li><a href="{% url auth_password_reset %}">{% trans "No Password? Reset your password here." %}</a></li>
                 </ul>
             </fieldset>
         </form>
