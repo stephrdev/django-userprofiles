@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
  
 setup(
     name='django-userprofiles',
-    version='0.1',
+    version='0.2',
     description='Profiles and Registration',
     author='Stephan Jaekel',
     author_email='steph@rdev.info',
