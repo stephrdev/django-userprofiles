@@ -4,6 +4,7 @@ import uuid
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 from userprofiles import settings as up_settings
 
@@ -16,17 +17,17 @@ def generate_confirm_expire_date():
 
 
 class EmailVerification(models.Model):
-    user = models.ForeignKey(User, verbose_name='User', blank=False)
-    old_email = models.EmailField('Old e-mail address')
-    new_email = models.EmailField('New e-mail address')
+    user = models.ForeignKey(User, verbose_name=_('User'), blank=False)
+    old_email = models.EmailField(_('Old e-mail address'))
+    new_email = models.EmailField(_('New e-mail address'))
 
-    token = models.CharField('Token', max_length=40, default=generate_token)
-    code = models.CharField('Code', max_length=40, default=generate_token)
+    token = models.CharField(_('Token'), max_length=40, default=generate_token)
+    code = models.CharField(_('Code'), max_length=40, default=generate_token)
 
-    is_approved = models.BooleanField('Approved', default=False)
-    is_expired = models.BooleanField('Expired', default=False)
+    is_approved = models.BooleanField(_('Approved'), default=False)
+    is_expired = models.BooleanField(_('Expired'), default=False)
 
-    expiration_date = models.DateTimeField('Expiration date',
+    expiration_date = models.DateTimeField(_('Expiration date'),
         default=generate_confirm_expire_date)
 
     def __unicode__(self):
@@ -46,5 +47,5 @@ class EmailVerification(models.Model):
 
     class Meta:
         app_label = 'userprofiles'
-        verbose_name = 'E-mail verification'
-        verbose_name_plural = 'E-mail verifications'
+        verbose_name = _('E-mail verification')
+        verbose_name_plural = _('E-mail verifications')

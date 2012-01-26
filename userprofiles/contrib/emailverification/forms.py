@@ -5,12 +5,13 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.utils.translation import ugettext_lazy as _
 
 from userprofiles.contrib.emailverification.models import EmailVerification
 
 
 class ChangeEmailForm(forms.Form):
-    new_email = forms.EmailField('New e-mail address', required=True)
+    new_email = forms.EmailField(_('New e-mail address'), required=True)
 
     def clean_new_email(self):
         new_email = self.cleaned_data['new_email']
@@ -19,8 +20,8 @@ class ChangeEmailForm(forms.Form):
         verification_emails = EmailVerification.objects.filter(
             new_email__iexact=new_email, is_expired=False).count()
         if user_emails + verification_emails > 0:
-            raise forms.ValidationError(
-                'This email address is already in use. Please supply a different email address.')
+            raise forms.ValidationError(_(
+                'This email address is already in use. Please supply a different email address.'))
 
         return new_email
 

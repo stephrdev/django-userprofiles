@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, render, redirect
 from django.template.context import RequestContext
+from django.utils.translation import ugettext_lazy as _
 
 from userprofiles import settings as up_settings
 from userprofiles.utils import get_form_class
@@ -24,7 +25,7 @@ def profile_change(request):
             instance=request.user.get_profile())
         if form.is_valid():
             profile = form.save()
-            messages.success(request, u'Profile changed')
+            messages.success(request, _(u'Profile changed'))
             return redirect(up_settings.PROFILE_CHANGE_DONE_URL)
     else:
         if up_settings.REGISTRATION_FULLNAME:

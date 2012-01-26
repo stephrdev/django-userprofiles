@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from userprofiles import settings as up_settings
 from userprofiles.utils import UserProfile
 
 
 class ProfileForm(forms.ModelForm):
-    first_name = forms.CharField('First name', required=False)
-    last_name = forms.CharField('Last name', required=False)
-    email = forms.EmailField('E-mail')
+    first_name = forms.CharField(_('First name'), required=False)
+    last_name = forms.CharField(_('Last name'), required=False)
+    email = forms.EmailField(_('E-mail'))
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)

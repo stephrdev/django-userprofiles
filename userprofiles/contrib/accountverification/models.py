@@ -80,7 +80,7 @@ class AccountVerification(models.Model):
     objects = AccountVerificationManager()
 
     def __unicode__(self):
-        return u'Account verification for %s' % self.user
+        return u'Account verification: %s' % self.user
 
     def activation_key_expired(self):
         expiration_date = timedelta(days=up_settings.ACCOUNT_VERIFICATION_DAYS)

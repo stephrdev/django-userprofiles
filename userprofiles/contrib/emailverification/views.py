@@ -2,6 +2,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.utils.translation import ugettext_lazy as _
 
 from userprofiles import settings as up_settings
 from userprofiles.contrib.emailverification.forms import ChangeEmailForm
@@ -36,9 +37,9 @@ def email_change_approve(request, token, code):
         verification.is_approved = True
         verification.save()
         messages.success(request,
-            u'E-mail address changed to %s' % verification.new_email)
+            _(u'E-mail address changed to %s' % verification.new_email))
     except EmailVerification.DoesNotExist:
         messages.error(request,
-            u'Unable to change e-mail address. Confirmation link is invalid.')
+            _(u'Unable to change e-mail address. Confirmation link is invalid.'))
 
     return redirect(up_settings.EMAIL_VERIFICATION_DONE_URL)
