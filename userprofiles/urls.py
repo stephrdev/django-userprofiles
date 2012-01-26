@@ -1,6 +1,8 @@
-from django.conf.urls.defaults import *
+# -*- coding: utf-8 -*-
+from django.conf.urls.defaults import patterns, url, include
 
-from userprofiles import settings as up_settings
+from django.conf import settings
+
 
 urlpatterns = patterns('userprofiles.views',
     url(r'^register/$', 'registration', name='userprofiles_registration'),
@@ -8,18 +10,20 @@ urlpatterns = patterns('userprofiles.views',
         name='userprofiles_registration_complete'),
 )
 
-if up_settings.USERPROFILES_USE_ACCOUNT_VERIFICATION:
-    urlpatterns += patterns('userprofiles.views',
-        url(r'^activate/(?P<activation_key>\w+)/$', 'registration_activate',
-            name='userprofiles_registration_activate'),
+if 'userprofiles.contrib.accountverification' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('',
+        (r'^activate/', include('userprofiles.contrib.accountverification.urls')),
     )
 
-if up_settings.USERPROFILES_USE_PROFILE and up_settings.USERPROFILES_USE_PROFILE_VIEW:
-    urlpatterns += patterns('userprofiles.views',
-        url(r'^profile/$', 'profile',
-            name='userprofiles_profile'),
+if 'userprofiles.contrib.emailverification' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('',
+        (r'^email/', include('userprofiles.contrib.emailverification.urls')),
     )
 
+if 'userprofiles.contrib.profiles' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('',
+        (r'^profile/', include('userprofiles.contrib.profiles.urls')),
+    )
 
 urlpatterns += patterns('django.contrib.auth.views',
     url(r'^login/$', 'login', {'template_name': 'userprofiles/login.html'},
@@ -47,4 +51,3 @@ urlpatterns += patterns('django.contrib.auth.views',
         {'template_name': 'userprofiles/password_reset_done.html'},
         name='auth_password_reset_done'),
 )
-

@@ -1,32 +1,67 @@
+# -*- coding: utf-8 -*-
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 
-USERPROFILES_REGISTRATION_FORM = getattr(
-    settings, 'USERPROFILES_REGISTRATION_FORM', 'userprofiles.forms.RegistrationForm')
 
-USERPROFILES_USE_PROFILE = getattr(
-    settings, 'USERPROFILES_USE_PROFILE', False)
+REGISTRATION_FORM = getattr(
+    settings, 'USERPROFILES_REGISTRATION_FORM',
+    'userprofiles.forms.RegistrationForm')
 
-USERPROFILES_USE_PROFILE_VIEW = getattr(
-    settings, 'USERPROFILES_USE_PROFILE_VIEW', False)
-
-USERPROFILES_INLINE_PROFILE_ADMIN = getattr(
+INLINE_PROFILE_ADMIN = getattr(
     settings, 'USERPROFILES_INLINE_PROFILE_ADMIN', False)
 
-USERPROFILES_USE_ACCOUNT_VERIFICATION = getattr(
-    settings, 'USERPROFILES_USE_ACCOUNT_VERIFICATION', False)
-
-USERPROFILES_ACCOUNT_VERIFICATION_DAYS = getattr(
-    settings, 'USERPROFILES_ACCOUNT_VERIFICATION_DAYS', 7)
-
-USERPROFILES_DOUBLE_CHECK_EMAIL = getattr(
+DOUBLE_CHECK_EMAIL = getattr(
     settings, 'USERPROFILES_DOUBLE_CHECK_EMAIL', False)
 
-USERPROFILES_CHECK_UNIQUE_EMAIL = getattr(
+CHECK_UNIQUE_EMAIL = getattr(
     settings, 'USERPROFILES_CHECK_UNIQUE_EMAIL', False)
 
-USERPROFILES_DOUBLE_CHECK_PASSWORD = getattr(
+DOUBLE_CHECK_PASSWORD = getattr(
     settings, 'USERPROFILES_DOUBLE_CHECK_PASSWORD', False)
 
-USERPROFILES_REGISTRATION_FULLNAME = getattr(
+REGISTRATION_FULLNAME = getattr(
     settings, 'USERPROFILES_REGISTRATION_FULLNAME', False)
 
+
+USE_ACCOUNT_VERIFICATION = getattr(
+    settings, 'USERPROFILES_USE_ACCOUNT_VERIFICATION', False)
+
+if (USE_ACCOUNT_VERIFICATION and
+    'userprofiles.contrib.accountverification' not in settings.INSTALLED_APPS):
+    raise ImproperlyConfigured('You need to add `userprofiles.contrib.accountverification` '
+        'to INSTALLED_APPS to use account verification.')
+
+ACCOUNT_VERIFICATION_DAYS = getattr(
+    settings, 'USERPROFILES_ACCOUNT_VERIFICATION_DAYS', 7)
+
+
+EMAIL_VERIFICATION_DAYS = getattr(
+    settings, 'USERPROFILES_EMAIL_VERIFICATION_DAYS', 2)
+
+EMAIL_VERIFICATION_DONE_URL = getattr(
+    settings, 'USERPROFILES_EMAIL_VERIFICATION_DONE_URL',
+    'userprofiles_email_change')
+
+
+USE_PROFILE = getattr(
+    settings, 'USERPROFILES_USE_PROFILE', False)
+
+if not USE_PROFILE and 'userprofiles.contrib.profiles' in settings.INSTALLED_APPS:
+    raise ImproperlyConfigured('You need to activate profiles to use '
+        '`userprofiles.contrib.accountverification`')
+
+PROFILE_FORM = getattr(
+    settings, 'USERPROFILES_PROFILE_FORM',
+    'userprofiles.contrib.profiles.forms.ProfileForm')
+
+PROFILE_ALLOW_EMAIL_CHANGE = getattr(
+    settings, 'USERPROFILES_PROFILE_ALLOW_EMAIL_CHANGE', False)
+
+if PROFILE_ALLOW_EMAIL_CHANGE and CHECK_UNIQUE_EMAIL:
+    raise ImproperlyConfigured(
+        'USERPROFILES_PROFILE_ALLOW_EMAIL_CHANGE cannot be activated '
+        'when USERPROFILES_CHECK_UNIQUE_EMAIL is active.')
+
+PROFILE_CHANGE_DONE_URL = getattr(
+    settings, 'USERPROFILES_PROFILE_CHANGE_DONE_URL',
+    'userprofiles_profile_change')

@@ -1,32 +1,12 @@
-from django.shortcuts import render_to_response, redirect
-from django.template.context import RequestContext
-
-from django.contrib.auth.decorators import login_required
+# -*- coding: utf-8 -*-
+from django.shortcuts import render, redirect
 
 from userprofiles import settings as up_settings
-from userprofiles.utils import get_registration_form
+from userprofiles.utils import get_form_class
 
-if up_settings.USERPROFILES_USE_PROFILE:
-    @login_required
-    def profile(request):
-        return render_to_response('userprofiles/profile.html', {
-            'user': request.user,
-        }, context_instance=RequestContext(request))
-
-
-if up_settings.USERPROFILES_USE_ACCOUNT_VERIFICATION:
-    from userprofiles.models import AccountVerification
-
-    def registration_activate(request, activation_key):
-        activation_key = activation_key.lower()
-        account = AccountVerification.objects.activate_user(activation_key)
-        return render_to_response('userprofiles/registration_activate.html', {
-            'account': account,
-            'expiration_days': up_settings.USERPROFILES_ACCOUNT_VERIFICATION_DAYS
-        }, context_instance=RequestContext(request))
 
 def registration(request):
-    RegistrationForm = get_registration_form(up_settings.USERPROFILES_REGISTRATION_FORM)
+    RegistrationForm = get_form_class(up_settings.REGISTRATION_FORM)
 
     if request.method == 'POST':
         form = RegistrationForm(data=request.POST, files=request.FILES)
@@ -36,13 +16,12 @@ def registration(request):
     else:
         form = RegistrationForm()
 
-    return render_to_response('userprofiles/registration.html', {
+    return render(request, 'userprofiles/registration.html', {
         'form': form
-    }, context_instance=RequestContext(request))
+    })
 
 def registration_complete(request):
-    return render_to_response('userprofiles/registration_complete.html', {
-        'account_verification_active': up_settings.USERPROFILES_USE_ACCOUNT_VERIFICATION,
-        'expiration_days': up_settings.USERPROFILES_ACCOUNT_VERIFICATION_DAYS,
-    }, context_instance=RequestContext(request))
-
+    return render(request, 'userprofiles/registration_complete.html', {
+        'account_verification_active': up_settings.USE_ACCOUNT_VERIFICATION,
+        'expiration_days': up_settings.ACCOUNT_VERIFICATION_DAYS,
+    })
