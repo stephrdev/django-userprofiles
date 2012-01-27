@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Change e-mail address{% endblock %}
+{% block title %}{% trans "Change e-mail address" %}{% endblock %}
 
 {% block content %}
-    <h1>Change e-mail address</h1>
+    <h1>{% trans "Change e-mail address" %}</h1>
 
     <form action="." method="post">
         {% csrf_token %}
@@ -11,7 +12,7 @@
             {{ form.as_p }}
         </fieldset>
         <fieldset class="submit-row">
-            <p><button type="submit">Change email address</button></p>
+            <p><button type="submit">{% trans "Change e-mail address" %}</button></p>
         </fieldset>
     </form>
 {% endblock %}

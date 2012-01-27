@@ -4,11 +4,15 @@
 {% block title %}{% trans "Registration" %}{% endblock %}
 
 {% block content %}
-    <h1>Registration</h1>
+    <h1>{% trans "Registration" %}</h1>
 
     {% if account %}
-        <p>We activated your account. You are now able to log in. Have fun!</p>
+        <p>
+            {% blocktrans %}We activated your account. You are now able to log in. Have fun!{% endblocktrans %}
+        </p>
     {% else %}
-        <p>The submitted activation code is invalid. Activation is not possible.</p>
+        <p>
+            {% blocktrans %}The submitted activation code is invalid. Activation is not possible.{% endblocktrans %}
+        </p>
     {% endif %}
 {% endblock %}

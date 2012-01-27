@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Registration" %}{% endblock %}
+{% block title %}{% trans "Your profile" %}{% endblock %}
 
 {% block content %}
-    <h1>Your profile</h1>
+    <h1>{% trans "Your profile" %}</h1>
 
     <p>
-        Welcome back, {{ user }}!
+        {% blocktrans %}Welcome back, {{ user }}!{% endblocktrans %}
     </p>
 {% endblock %}

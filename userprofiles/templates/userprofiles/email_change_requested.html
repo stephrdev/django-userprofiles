@@ -1,12 +1,13 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Change e-mail address{% endblock %}
+{% block title %}{% trans "Change e-mail address" %}{% endblock %}
 
 {% block content %}
-    <h1>Change e-mail address</h1>
+    <h1>{% trans "Change e-mail address" %}</h1>
 
     <p>
-        We send you a e-mail including a link. Please click the link to
-        continue changing your e-mail address. Thank you!
+        {% blocktrans %}We send you a e-mail including a link. Please click the link to
+        continue changing your e-mail address. Thank you!{% endblocktrans %}
     </p>
 {% endblock %}

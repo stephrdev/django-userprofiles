@@ -1,5 +1,5 @@
-Please click on the following link to change your email address:
+{% load i18n %}{% url userprofiles_email_change_approve verification.token, verification.code as activation_url %}{% blocktrans with url=activation_url domain=site.domain %}Please click on the following link to change your email address:
 
-http://{{ site.domain }}{% url userprofiles_email_change_approve verification.token, verification.code %}
+http://{{ domain }}{{ url }}
 
-Cheers,
+Cheers!{% endblocktrans %}

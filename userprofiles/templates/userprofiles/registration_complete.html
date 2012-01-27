@@ -4,18 +4,18 @@
 {% block title %}{% trans "Registration" %}{% endblock %}
 
 {% block content %}
-    <h1>Registration</h1>
+    <h1>{% trans "Registration" %}</h1>
 
     {% if account_verification_active %}
         <p>
-            Your registration was successful. We send you a e-mail including a link.<br />
+            {% blocktrans %}Your registration was successful. We send you a e-mail including a link.<br />
             Please click the link to activate your account. Thank you!<br />
             <br />
-            The link is valid for {{ expiration_days }} days.
+            The link is valid for {{ expiration_days }} days.{% endblocktrans %}
         </p>
     {% else %}
         <p>
-            Your registration was successful.
+            {% blocktrans %}Your registration was successful.{% endblocktrans %}
         </p>
     {% endif %}
 {% endblock %}
