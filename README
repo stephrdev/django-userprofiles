@@ -33,10 +33,10 @@ Defaults to 'userprofiles.forms.RegistrationForm'
 
 `USERPROFILES_USE_ACCOUNT_VERIFICATION`
 
-This app provides you with a mechanism to verify user accounts by sending
-a email with an activation link. To use the account verification you have to
-add `userprofiles.contrib.accountverification` to your `INSTALLED_APPS` to
-enable the verification.
+This app provides a mechanism to verify user accounts by sending an email with
+an activation link. To use the account verification you have to add
+`userprofiles.contrib.accountverification` to your `INSTALLED_APPS` in order
+toto enable the verification.
 
 `USERPROFILES_ACCOUNT_VERIFICATION_DAYS`
 
@@ -51,9 +51,9 @@ features to make it easy to manage these profiles.
 
 `USERPROFILES_USE_PROFILE`
 
-If enabled, userprofiles will look for the model set in AUTH_PROFILE_MODULE.
-Its likely that you need to overwrite `USERPROFILES_REGISTRATION_FORM` to add
-your additional profile fields and define a `save_profile` method wich gets
+If enabled, userprofiles will look for the model set in `AUTH_PROFILE_MODULE`.
+it's likely that you need to overwrite `USERPROFILES_REGISTRATION_FORM` to add
+your additional profile fields and define a `save_profile` method which is
 called after the user was created.
 
 `USERPROFILES_INLINE_PROFILE_ADMIN`
@@ -64,8 +64,8 @@ If enabled, userprofiles will add a profile inline to you user admin.
 userprofiles.contrib.profiles
 ------------------------------
 
-django-userprofiles has a contrib app to allow profile changes and adds a
-profile view.
+django-userprofiles also comes with a contrib app to allow profile changes and
+a profile view.
 
 `USERPROFILES_PROFILE_FORM`
 
@@ -76,7 +76,7 @@ The default form is a ModelForm for you AUTH_PROFILE_MODULE.
 
 If enabled, the user is allowed to simply change the email address in the
 profile change view. This setting can only be activated if
-USERPROFILES_CHECK_UNIQUE_EMAIL is disabled.
+`USERPROFILES_CHECK_UNIQUE_EMAIL` is disabled.
 
 If you want to check for unique emails and allow your users to change their
 email addresses, you have to use the emailverification app.
@@ -84,7 +84,7 @@ email addresses, you have to use the emailverification app.
 `USERPROFILES_PROFILE_CHANGE_DONE_URL`
 
 Defines the redirect destination after the profile was saved. Defaults to the
-url `userprofiles_profile_change`.
+named URL `userprofiles_profile_change`.
 
 
 userprofiles.contrib.emailverification
@@ -95,21 +95,21 @@ django-userprofiles provides a simple app to do confirmed email address changes.
 
 `USERPROFILES_EMAIL_VERIFICATION_DAYS`
 
-Defines the amount of days a user has to verify his news email address.
+Defines the number of days a user has time to verify her/his new email address.
 Defaults to 2.
 
 `USERPROFILES_EMAIL_VERIFICATION_DONE_URL`
 
 Defines the redirect destination after the email change was verified.
-Defaults to the url `userprofiles_email_change`.
+Defaults to the named URL `userprofiles_email_change`.
 
 
 Tools
 -----
 
-There is a auth backend which allows your users to log in using their email address.
-Add `userprofiles.auth_backends.EmailOrUsernameModelBackend` to your settings
-if you want to use this feature.
+There is an auth backend which allows your users to log in using their email
+address.  Add `userprofiles.auth_backends.EmailOrUsernameModelBackend` to your
+settings if you want to use this feature.
 
 
 Kudos to (the people who inspired me to write this code)
