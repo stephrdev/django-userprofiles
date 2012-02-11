@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
- 
+
 setup(
     name='django-userprofiles',
     version='0.2',
