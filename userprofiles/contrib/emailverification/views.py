@@ -36,8 +36,8 @@ def email_change_approve(request, token, code):
 
         verification.is_approved = True
         verification.save()
-        messages.success(request,
-            _(u'E-mail address changed to %s' % verification.new_email))
+        messages.success(request, _(u'E-mail address changed to %(email)s' % {
+            'email': verification.new_email}))
     except EmailVerification.DoesNotExist:
         messages.error(request,
             _(u'Unable to change e-mail address. Confirmation link is invalid.'))

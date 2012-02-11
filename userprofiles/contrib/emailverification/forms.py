@@ -11,7 +11,7 @@ from userprofiles.contrib.emailverification.models import EmailVerification
 
 
 class ChangeEmailForm(forms.Form):
-    new_email = forms.EmailField(_('New e-mail address'), required=True)
+    new_email = forms.EmailField(label=_('New e-mail address'), required=True)
 
     def clean_new_email(self):
         new_email = self.cleaned_data['new_email']

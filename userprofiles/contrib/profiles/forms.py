@@ -7,9 +7,9 @@ from userprofiles.utils import UserProfile
 
 
 class ProfileForm(forms.ModelForm):
-    first_name = forms.CharField(_('First name'), required=False)
-    last_name = forms.CharField(_('Last name'), required=False)
-    email = forms.EmailField(_('E-mail'))
+    first_name = forms.CharField(label=_('First name'), required=False)
+    last_name = forms.CharField(label=_('Last name'), required=False)
+    email = forms.EmailField(label=_('E-mail'))
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)

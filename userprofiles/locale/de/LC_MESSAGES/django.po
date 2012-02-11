@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-27 10:25+0100\n"
-"PO-Revision-Date: 2012-01-27 10:27+0100\n"
+"POT-Creation-Date: 2012-02-11 12:02+0100\n"
+"PO-Revision-Date: 2012-02-11 12:02+0100\n"
 "Last-Translator: Stephan Jaekel <steph@rdev.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,8 +22,8 @@ msgid "Username"
 msgstr "Benutzername"
 
 #: forms.py:19
-msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
-msgstr "Dieses Feld darf nur Buchstaben, Ziffern sowie die Zeichen @/./+/-/_ enthalten."
+msgid "This value may contain only letters, numbers and ./-/_ characters."
+msgstr "Dieses Feld darf nur Buchstaben, Ziffern sowie die Zeichen ./-/_ enthalten."
 
 #: forms.py:21
 #: contrib/profiles/forms.py:12
@@ -125,8 +125,8 @@ msgstr "E-Mail Bestätigungen"
 
 #: contrib/emailverification/views.py:40
 #, python-format
-msgid "E-mail address changed to %s"
-msgstr "E-Mail Adresse geändert in %s"
+msgid "E-mail address changed to %(email)s"
+msgstr "E-Mail Adresse geändert in %(email)s"
 
 #: contrib/emailverification/views.py:43
 msgid "Unable to change e-mail address. Confirmation link is invalid."
