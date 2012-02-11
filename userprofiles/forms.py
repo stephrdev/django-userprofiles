@@ -15,8 +15,8 @@ if 'userprofiles.contrib.emailverification' in settings.INSTALLED_APPS:
 
 class RegistrationForm(forms.Form):
     username = forms.RegexField(label=_("Username"), max_length=30,
-        regex=r'^[\w.@+-]+$', error_messages = {'invalid': _(
-            'This value may contain only letters, numbers and @/./+/-/_ characters.')})
+        regex=r'^[\w.-]+$', error_messages = {'invalid': _(
+            'This value may contain only letters, numbers and ./-/_ characters.')})
 
     email = forms.EmailField(label=_('E-mail'))
     email_repeat = forms.EmailField(label=_('E-mail (repeat)'), required=True)
