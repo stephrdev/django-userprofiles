@@ -26,7 +26,11 @@ class ProfileForm(forms.ModelForm):
         if up_settings.REGISTRATION_FULLNAME:
             obj.user.first_name = self.cleaned_data['first_name']
             obj.user.last_name = self.cleaned_data['last_name']
+
+        if up_settings.PROFILE_ALLOW_EMAIL_CHANGE:
             obj.user.email = self.cleaned_data['email']
+
+        if up_settings.REGISTRATION_FULLNAME or up_settings.PROFILE_ALLOW_EMAIL_CHANGE:
             obj.user.save()
 
         if hasattr(self, 'save_profile'):
