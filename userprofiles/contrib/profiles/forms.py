@@ -14,12 +14,20 @@ class ProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
 
+        if not up_settings.PROFILE_ALLOW_EMAIL_CHANGE:
+            del self.fields['email']
+        else:
+            self.fields.keyOrder.remove('email')
+            self.fields.keyOrder.insert(0, 'email')
+
         if not up_settings.REGISTRATION_FULLNAME:
             del self.fields['first_name']
             del self.fields['last_name']
-
-        if not up_settings.PROFILE_ALLOW_EMAIL_CHANGE:
-            del self.fields['email']
+        else:
+            self.fields.keyOrder.remove('first_name')
+            self.fields.keyOrder.remove('last_name')
+            self.fields.keyOrder.insert(0, 'first_name')
+            self.fields.keyOrder.insert(1, 'last_name')
 
     def save(self, *args, **kwargs):
         obj = super(ProfileForm, self).save(*args, **kwargs)
