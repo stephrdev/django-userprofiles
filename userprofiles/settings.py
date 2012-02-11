@@ -62,6 +62,12 @@ if PROFILE_ALLOW_EMAIL_CHANGE and CHECK_UNIQUE_EMAIL:
         'USERPROFILES_PROFILE_ALLOW_EMAIL_CHANGE cannot be activated '
         'when USERPROFILES_CHECK_UNIQUE_EMAIL is active.')
 
+if (PROFILE_ALLOW_EMAIL_CHANGE
+    and 'userprofiles.contrib.emailverification' in settings.INSTALLED_APPS):
+    raise ImproperlyConfigured(
+        'USERPROFILES_PROFILE_ALLOW_EMAIL_CHANGE cannot be activated '
+        'when `userprofiles.contrib.emailverification` is used.')
+
 PROFILE_CHANGE_DONE_URL = getattr(
     settings, 'USERPROFILES_PROFILE_CHANGE_DONE_URL',
     'userprofiles_profile_change')
