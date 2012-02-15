@@ -46,6 +46,6 @@ class ProfileForm(forms.ModelForm):
 
         return obj
 
-    class Meta(object):
+    class Meta:
         model = UserProfile
         exclude = ('user',)

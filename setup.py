@@ -14,7 +14,8 @@ setup(
     url='https://github.com/stephrdev/django-userprofiles/',
     packages=find_packages(exclude=['example_project', 'example_project.*']),
     package_data = {
-        'userprofiles': ['templates/*/*.html'],
+        'userprofiles': ['templates/userprofiles/*.html', 'templates/userprofiles/*/*.html',
+            'locale/de/LC_MESSAGES/*'],
     },
     classifiers=[
         'Development Status :: 4 - Beta',
