@@ -6,7 +6,7 @@ def read(fname):
 
 setup(
     name='django-userprofiles',
-    version='0.2',
+    version='0.3',
     description='Registration, e-mail verifications and profiles.',
     long_description=read('README.rst'),
     author='Stephan Jaekel',
