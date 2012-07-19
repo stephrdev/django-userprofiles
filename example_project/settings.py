@@ -1,3 +1,7 @@
+import os
+
+PROJECT_ROOT = os.path.dirname(__file__)
+
 DEBUG = True
 
 DATABASES = {
@@ -15,7 +19,7 @@ SECRET_KEY = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 ROOT_URLCONF = 'example_project.urls'
 
 TEMPLATE_DIRS = (
-    'templates',
+    os.path.join(PROJECT_ROOT, 'templates'),
 )
 
 INSTALLED_APPS = (

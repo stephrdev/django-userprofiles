@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import uuid
+
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
@@ -15,7 +17,7 @@ if 'userprofiles.contrib.emailverification' in settings.INSTALLED_APPS:
 
 class RegistrationForm(forms.Form):
     username = forms.RegexField(label=_("Username"), max_length=30,
-        regex=r'^[\w.-]+$', error_messages = {'invalid': _(
+        regex=r'^[\w.-]+$', error_messages={'invalid': _(
             'This value may contain only letters, numbers and ./-/_ characters.')})
 
     email = forms.EmailField(label=_('E-mail'))
@@ -42,19 +44,41 @@ class RegistrationForm(forms.Form):
             del self.fields['first_name']
             del self.fields['last_name']
 
-    def clean_username(self):
-        if User.objects.filter(username__iexact=self.cleaned_data['username']):
-            raise forms.ValidationError(
-                _(u'A user with that username already exists.'))
+        if up_settings.EMAIL_ONLY:
+            self.fields['username'].widget = forms.widgets.HiddenInput()
+            self.fields['username'].required = False
 
-        return self.cleaned_data['username']
+    def _generate_username(self):
+        """ Generate a unique username """
+        while True:
+            # Generate a UUID username, removing dashes and the last 2 chars
+            # to make it fit into the 30 char User.username field. Gracefully
+            # handle any unlikely, but possible duplicate usernames.
+            username = str(uuid.uuid4())
+            username = username.replace('-', '')
+            username = username[:-2]
+
+            try:
+                User.objects.get(username=username)
+            except User.DoesNotExist:
+                return username
+
+    def clean_username(self):
+        if up_settings.EMAIL_ONLY:
+            username = self._generate_username()
+        else:
+            username = self.cleaned_data['username']
+            if User.objects.filter(username__iexact=username):
+                raise forms.ValidationError(
+                    _(u'A user with that username already exists.'))
+
+        return username
 
     def clean_email(self):
         if not up_settings.CHECK_UNIQUE_EMAIL:
             return self.cleaned_data['email']
 
         new_email = self.cleaned_data['email']
-
 
         emails = User.objects.filter(email__iexact=new_email).count()
         if 'userprofiles.contrib.emailverification' in settings.INSTALLED_APPS:
