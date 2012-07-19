@@ -1,0 +1,6 @@
+include LICENSE
+include AUTHORS
+include README.rst
+recursive-include userprofiles/templates *.html
+recursive-include userprofiles/locale *.po
+recursive-include userprofiles/locale *.mo
