@@ -24,7 +24,7 @@ Registration settings
 
 `USERPROFILES_REGISTRATION_FORM`
     You can override the default registration form by changing this setting.
-    Defaults to 'userprofiles.forms.RegistrationForm'
+    Defaults to 'userprofiles.forms.RegistrationForm'.
 
 `USERPROFILES_USE_ACCOUNT_VERIFICATION`
     This app provides a mechanism to verify user accounts by sending an email
@@ -36,6 +36,17 @@ Registration settings
     Defines the amount of days a user has to activate his account. Defaults to
     7.
 
+`USERPROFILES_EMAIL_ONLY`
+    Removes the username field and generates a UUID for the required username
+    for sites that want to use email addresses as logins.
+
+`USERPROFILES_AUTO_LOGIN`
+    Automatically log the user in upon registration. This setting cannot be
+    used in conjunction with `USERPROFILES_USE_ACCOUNT_VERIFICATION`.
+
+`USERPROFILES_REDIRECT_ON_REGISTRATION`
+    Define a named URL to redirect the user upon successful registration.
+    Defaults to 'userprofiles_registration_complete'.
 
 Profile settings
 ----------------
