@@ -22,6 +22,20 @@ DOUBLE_CHECK_PASSWORD = getattr(
 REGISTRATION_FULLNAME = getattr(
     settings, 'USERPROFILES_REGISTRATION_FULLNAME', False)
 
+# Only use Email field on the form
+EMAIL_ONLY = getattr(
+    settings, 'USERPROFILES_EMAIL_ONLY', False)
+
+# Automatically log in the user upon registration
+AUTO_LOGIN = getattr(
+    settings, 'USERPROFILES_AUTO_LOGIN', False)
+
+# Allows user to more easily control where registrations land
+REGISTRATION_REDIRECT = getattr(
+    settings,
+    'USERPROFILES_REDIRECT_ON_REGISTRATION',
+    'userprofiles_registration_complete'
+)
 
 USE_ACCOUNT_VERIFICATION = getattr(
     settings, 'USERPROFILES_USE_ACCOUNT_VERIFICATION', False)
@@ -30,6 +44,10 @@ if (USE_ACCOUNT_VERIFICATION and
     'userprofiles.contrib.accountverification' not in settings.INSTALLED_APPS):
     raise ImproperlyConfigured('You need to add `userprofiles.contrib.accountverification` '
         'to INSTALLED_APPS to use account verification.')
+
+# These settings together make no sense
+if USE_ACCOUNT_VERIFICATION and AUTO_LOGIN:
+    raise ImproperlyConfigured("You cannot use autologin with account verification")
 
 ACCOUNT_VERIFICATION_DAYS = getattr(
     settings, 'USERPROFILES_ACCOUNT_VERIFICATION_DAYS', 7)
