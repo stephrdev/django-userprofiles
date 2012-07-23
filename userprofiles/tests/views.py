@@ -61,6 +61,22 @@ class SimpleViewTests(TestCase):
 
         up_settings.AUTO_LOGIN = False
 
+    def test_email_and_auto_login(self):
+        up_settings.EMAIL_ONLY = True
+        up_settings.AUTO_LOGIN = True
+
+        url = reverse('userprofiles_registration')
+        response = self.client.post(url, data=self.data)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response,
+                             reverse(up_settings.REGISTRATION_REDIRECT))
+
+        user = User.objects.get(email=self.data['email'])
+        self.assertTrue(user.is_authenticated())
+
+        up_settings.EMAIL_ONLY = False
+        up_settings.AUTO_LOGIN = False
+
     def test_registration_complete(self):
         """ Simple test to make sure this renders """
         response = self.client.get(reverse('userprofiles_registration_complete'))

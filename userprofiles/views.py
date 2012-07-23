@@ -19,6 +19,10 @@ def registration(request):
 
             # Automatically log this user in
             if up_settings.AUTO_LOGIN:
+
+                if up_settings.EMAIL_ONLY:
+                    username = form.cleaned_data['email']
+
                 user = authenticate(username=username, password=password)
                 if user is not None:
                     if user.is_active:
