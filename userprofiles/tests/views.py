@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 from userprofiles import settings as up_settings
 
+
 class SimpleViewTests(TestCase):
 
     def setUp(self):
@@ -33,8 +34,9 @@ class SimpleViewTests(TestCase):
 
         url = reverse('userprofiles_registration')
         response = self.client.get(url)
-        self.assertTrue('<input type="hidden" name="username"' in response.content)
 
+        self.assertTrue('<input type="hidden" name="username"' in response.content or
+                        '<input id="id_username" name="username" type="hidden" />' in response.content)
         data = self.data
         data['username'] = ''
 
