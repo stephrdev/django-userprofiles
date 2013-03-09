@@ -6,7 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
+
 
 if up_settings.USE_ACCOUNT_VERIFICATION:
     from userprofiles.contrib.accountverification.models import AccountVerification

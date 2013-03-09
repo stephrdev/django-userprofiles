@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response, render, redirect
 from django.template.context import RequestContext
 from django.utils.translation import ugettext_lazy as _
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 from userprofiles.utils import get_form_class
 
 

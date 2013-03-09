@@ -13,7 +13,7 @@ from django.template.loader import render_to_string
 from django.utils.hashcompat import sha_constructor
 from django.utils.translation import gettext_lazy as _
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 

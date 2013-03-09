@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 
 
 def generate_token():

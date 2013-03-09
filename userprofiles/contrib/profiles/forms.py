@@ -2,7 +2,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 from userprofiles.utils import UserProfile
 
 

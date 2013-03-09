@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 
 
 if up_settings.USE_PROFILE and up_settings.INLINE_PROFILE_ADMIN:

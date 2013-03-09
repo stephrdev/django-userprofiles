@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 
-from userprofiles import settings as up_settings
 from userprofiles.contrib.accountverification.models import AccountVerification
+from userprofiles.settings import up_settings
 
 
 def registration_activate(request, activation_key):

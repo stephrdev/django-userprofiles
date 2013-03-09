@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.models import SiteProfileNotAvailable

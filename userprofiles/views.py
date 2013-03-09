@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 from userprofiles.utils import get_form_class
 
 
