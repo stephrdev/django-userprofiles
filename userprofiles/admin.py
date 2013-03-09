@@ -18,6 +18,6 @@ if up_settings.USE_PROFILE and up_settings.INLINE_PROFILE_ADMIN:
         max_num = 1
 
     class UserProfileAdmin(UserAdmin):
-        inlines = [UserProfileInline,]
+        inlines = [UserProfileInline]
 
     admin.site.register(User, UserProfileAdmin)

@@ -12,6 +12,7 @@ from userprofiles import settings as up_settings
 def generate_token():
     return str(uuid.uuid4())
 
+
 def generate_confirm_expire_date():
     return datetime.now() + timedelta(days=up_settings.EMAIL_VERIFICATION_DAYS)
 

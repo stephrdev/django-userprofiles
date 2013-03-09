@@ -38,9 +38,10 @@ def get_profile_model():
 
 UserProfile = get_profile_model()
 
+
 def get_form_class(path):
     i = path.rfind('.')
-    module, attr = path[:i], path[i+1:]
+    module, attr = path[:i], path[i + 1:]
     try:
         mod = import_module(module)
     except ImportError, e:

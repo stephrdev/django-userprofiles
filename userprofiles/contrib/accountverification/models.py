@@ -71,6 +71,7 @@ class AccountVerificationManager(models.Manager):
                 if not user.is_active:
                     user.delete()
 
+
 class AccountVerification(models.Model):
     ACTIVATED = 'ALREADY_ACTIVATED'
 

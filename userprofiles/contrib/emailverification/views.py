@@ -14,7 +14,7 @@ def email_change(request):
     if request.method == 'POST':
         form = ChangeEmailForm(request.POST)
         if form.is_valid():
-            verification = form.save(request.user)
+            form.save(request.user)
             return redirect('userprofiles_email_change_requested')
     else:
         form = ChangeEmailForm()

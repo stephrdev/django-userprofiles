@@ -24,7 +24,7 @@ def profile_change(request):
         form = ProfileForm(request.POST, request.FILES,
             instance=request.user.get_profile())
         if form.is_valid():
-            profile = form.save()
+            form.save()
             messages.success(request, _(u'Profile changed'))
             return redirect(up_settings.PROFILE_CHANGE_DONE_URL)
     else:

@@ -13,7 +13,7 @@ def registration(request):
         form = RegistrationForm(data=request.POST, files=request.FILES)
 
         if form.is_valid():
-            new_user = form.save()
+            form.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
 
@@ -36,6 +36,7 @@ def registration(request):
     return render(request, 'userprofiles/registration.html', {
         'form': form
     })
+
 
 def registration_complete(request):
     return render(request, 'userprofiles/registration_complete.html', {
