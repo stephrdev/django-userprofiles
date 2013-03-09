@@ -7,7 +7,8 @@ env:
   - DJANGO=1.5
 install:
   - pip install -q Django==$DJANGO --use-mirrors
+  - pip install -q -r test_project/requirements.txt --use-mirrors
   - pip install -q -e . --use-mirrors
 
 script:
-  - python example_project/manage.py test userprofiles
+  - make test
