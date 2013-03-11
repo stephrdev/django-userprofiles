@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import sys
+
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
@@ -70,5 +72,10 @@ def validate_settings():
         raise ImproperlyConfigured(
             'USERPROFILES_PROFILE_ALLOW_EMAIL_CHANGE cannot be activated '
             'when USERPROFILES_USE_EMAIL_VERIFICATION is activated.')
+
+    if ('test' not in sys.argv and not up_settings.USE_EMAIL_VERIFICATION and
+            'userprofiles.contrib.emailverification' in settings.INSTALLED_APPS):
+        raise ImproperlyConfigured('You need to set USERPROFILES_USE_EMAIL_VERIFICATION '
+            'to use `userprofiles.contrib.emailverification`')
 
 validate_settings()
