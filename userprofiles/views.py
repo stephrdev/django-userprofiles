@@ -1,44 +1,43 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
+from django.views.generic import FormView, TemplateView
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 from userprofiles.utils import get_form_class
 
 
-def registration(request):
-    RegistrationForm = get_form_class(up_settings.REGISTRATION_FORM)
+class RegistrationView(FormView):
+    form_class = get_form_class(up_settings.REGISTRATION_FORM)
+    template_name = 'userprofiles/registration.html'
 
-    if request.method == 'POST':
-        form = RegistrationForm(data=request.POST, files=request.FILES)
+    def form_valid(self, form):
+        form.save()
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
 
-        if form.is_valid():
-            new_user = form.save()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+        # Automatically log this user in
+        if up_settings.AUTO_LOGIN:
+            if up_settings.EMAIL_ONLY:
+                username = form.cleaned_data['email']
 
-            # Automatically log this user in
-            if up_settings.AUTO_LOGIN:
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(self.request, user)
 
-                if up_settings.EMAIL_ONLY:
-                    username = form.cleaned_data['email']
+        return redirect(up_settings.REGISTRATION_REDIRECT)
 
-                user = authenticate(username=username, password=password)
-                if user is not None:
-                    if user.is_active:
-                        login(request, user)
+registration = RegistrationView.as_view()
 
-            return redirect(up_settings.REGISTRATION_REDIRECT)
 
-    else:
-        form = RegistrationForm()
+class RegistrationCompleteView(TemplateView):
+    template_name = 'userprofiles/registration_complete.html'
 
-    return render(request, 'userprofiles/registration.html', {
-        'form': form
-    })
+    def get_context_data(self, **kwargs):
+        return {
+            'account_verification_active': up_settings.USE_ACCOUNT_VERIFICATION,
+            'expiration_days': up_settings.ACCOUNT_VERIFICATION_DAYS,
+        }
 
-def registration_complete(request):
-    return render(request, 'userprofiles/registration_complete.html', {
-        'account_verification_active': up_settings.USE_ACCOUNT_VERIFICATION,
-        'expiration_days': up_settings.ACCOUNT_VERIFICATION_DAYS,
-    })
+registration_complete = RegistrationCompleteView.as_view()

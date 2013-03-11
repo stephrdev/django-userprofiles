@@ -1,9 +1,9 @@
-from django.db import models
 from django.conf import settings
-from userprofiles import settings as up_settings
-
-from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.models import SiteProfileNotAvailable
+from django.core.exceptions import ImproperlyConfigured
+from django.db import models
+
+from userprofiles.settings import up_settings
 
 try:
     from importlib import import_module
@@ -38,9 +38,10 @@ def get_profile_model():
 
 UserProfile = get_profile_model()
 
+
 def get_form_class(path):
     i = path.rfind('.')
-    module, attr = path[:i], path[i+1:]
+    module, attr = path[:i], path[i + 1:]
     try:
         mod = import_module(module)
     except ImportError, e:

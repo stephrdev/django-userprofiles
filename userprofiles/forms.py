@@ -2,17 +2,10 @@
 import uuid
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext_lazy as _
 
-from userprofiles import settings as up_settings
-
-if up_settings.USE_ACCOUNT_VERIFICATION:
-    from userprofiles.contrib.accountverification.models import AccountVerification
-
-if 'userprofiles.contrib.emailverification' in settings.INSTALLED_APPS:
-    from userprofiles.contrib.emailverification.models import EmailVerification
+from userprofiles.settings import up_settings
 
 
 class RegistrationForm(forms.Form):
@@ -81,10 +74,13 @@ class RegistrationForm(forms.Form):
         new_email = self.cleaned_data['email']
 
         emails = User.objects.filter(email__iexact=new_email).count()
-        if 'userprofiles.contrib.emailverification' in settings.INSTALLED_APPS:
+
+        if up_settings.USE_EMAIL_VERIFICATION:
+            from userprofiles.contrib.emailverification.models import EmailVerification
 
             emails += EmailVerification.objects.filter(
                 new_email__iexact=new_email, is_expired=False).count()
+
         if emails > 0:
             raise forms.ValidationError(
                 _(u'This email address is already in use. Please supply a different email address.'))
@@ -106,6 +102,8 @@ class RegistrationForm(forms.Form):
 
     def save(self, *args, **kwargs):
         if up_settings.USE_ACCOUNT_VERIFICATION:
+            from userprofiles.contrib.accountverification.models import AccountVerification
+
             new_user = AccountVerification.objects.create_inactive_user(
                 username=self.cleaned_data['username'],
                 password=self.cleaned_data['password'],

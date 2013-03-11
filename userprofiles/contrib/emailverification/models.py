@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime, timedelta
+from datetime import timedelta
 import uuid
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 
 
 def generate_token():
     return str(uuid.uuid4())
 
+
 def generate_confirm_expire_date():
-    return datetime.now() + timedelta(days=up_settings.EMAIL_VERIFICATION_DAYS)
+    return timezone.now() + timedelta(days=up_settings.EMAIL_VERIFICATION_DAYS)
 
 
 class EmailVerification(models.Model):

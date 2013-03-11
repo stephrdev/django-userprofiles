@@ -7,132 +7,134 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-11 12:02+0100\n"
+"POT-Creation-Date: 2013-03-11 17:26+0100\n"
 "PO-Revision-Date: 2012-02-11 12:02+0100\n"
 "Last-Translator: Stephan Jaekel <steph@rdev.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: forms.py:17
+#: forms.py:12
 msgid "Username"
 msgstr "Benutzername"
 
-#: forms.py:19
+#: forms.py:14
 msgid "This value may contain only letters, numbers and ./-/_ characters."
-msgstr "Dieses Feld darf nur Buchstaben, Ziffern sowie die Zeichen ./-/_ enthalten."
+msgstr ""
+"Dieses Feld darf nur Buchstaben, Ziffern sowie die Zeichen ./-/_ enthalten."
 
-#: forms.py:21
-#: contrib/profiles/forms.py:12
+#: forms.py:16 contrib/profiles/forms.py:12
 msgid "E-mail"
 msgstr "E-Mail"
 
-#: forms.py:22
+#: forms.py:17
 msgid "E-mail (repeat)"
 msgstr "E-Mail (Wiederholung)"
 
-#: forms.py:24
+#: forms.py:19
 msgid "Password"
 msgstr "Passwort"
 
-#: forms.py:26
+#: forms.py:21
 msgid "Password (repeat)"
 msgstr "Passwort (Wiederholung)"
 
-#: forms.py:29
-#: contrib/profiles/forms.py:10
+#: forms.py:24 contrib/profiles/forms.py:10
 msgid "First name"
 msgstr "Vorname"
 
-#: forms.py:30
-#: contrib/profiles/forms.py:11
+#: forms.py:25 contrib/profiles/forms.py:11
 msgid "Last name"
 msgstr "Nachname"
 
-#: forms.py:48
+#: forms.py:66
 msgid "A user with that username already exists."
 msgstr "Es existiert bereits ein Benutzer mit diesem Namen."
 
-#: forms.py:66
-#: contrib/emailverification/forms.py:24
-msgid "This email address is already in use. Please supply a different email address."
-msgstr "Diese E-Mail-Adresse wird bereits verwendet. Bitte geben Sie eine andere E-Mail-Adresse ein."
+#: forms.py:86 contrib/emailverification/forms.py:24
+msgid ""
+"This email address is already in use. Please supply a different email "
+"address."
+msgstr ""
+"Diese E-Mail-Adresse wird bereits verwendet. Bitte geben Sie eine andere E-"
+"Mail-Adresse ein."
 
-#: forms.py:74
+#: forms.py:94
 msgid "The two email addresses do not match."
 msgstr "Die beiden E-Mail-Adressen stimmen nicht überein."
 
-#: forms.py:79
+#: forms.py:99
 msgid "You must type the same password each time."
 msgstr "Die beiden Passwörter müssen übereinstimmen."
 
-#: contrib/accountverification/models.py:77
-#: contrib/emailverification/models.py:20
+#: contrib/accountverification/models.py:78
+#: contrib/emailverification/models.py:21
 msgid "User"
 msgstr "Benutzer"
 
-#: contrib/accountverification/models.py:78
+#: contrib/accountverification/models.py:79
 msgid "Activation key"
 msgstr "Aktivierungscode"
 
-#: contrib/accountverification/models.py:93
+#: contrib/accountverification/models.py:94
 msgid "Account verification"
 msgstr "Konto-Bestätigung"
 
-#: contrib/accountverification/models.py:94
+#: contrib/accountverification/models.py:95
 msgid "Account verifications"
 msgstr "Konto-Bestätigungen"
 
 #: contrib/emailverification/forms.py:14
-#: contrib/emailverification/models.py:22
+#: contrib/emailverification/models.py:23
 msgid "New e-mail address"
 msgstr "Neue E-Mail Adresse"
 
-#: contrib/emailverification/models.py:21
+#: contrib/emailverification/models.py:22
 msgid "Old e-mail address"
 msgstr "Alte E-Mail Adresse"
 
-#: contrib/emailverification/models.py:24
+#: contrib/emailverification/models.py:25
 msgid "Token"
 msgstr "Token"
 
-#: contrib/emailverification/models.py:25
+#: contrib/emailverification/models.py:26
 msgid "Code"
 msgstr "Code"
 
-#: contrib/emailverification/models.py:27
+#: contrib/emailverification/models.py:28
 msgid "Approved"
 msgstr "Bestätigt"
 
-#: contrib/emailverification/models.py:28
+#: contrib/emailverification/models.py:29
 msgid "Expired"
 msgstr "Abgelaufen"
 
-#: contrib/emailverification/models.py:30
+#: contrib/emailverification/models.py:31
 msgid "Expiration date"
 msgstr "Ablaufdatum"
 
-#: contrib/emailverification/models.py:50
+#: contrib/emailverification/models.py:51
 msgid "E-mail verification"
 msgstr "E-Mail Bestätigung"
 
-#: contrib/emailverification/models.py:51
+#: contrib/emailverification/models.py:52
 msgid "E-mail verifications"
 msgstr "E-Mail Bestätigungen"
 
-#: contrib/emailverification/views.py:40
+#: contrib/emailverification/views.py:47
 #, python-format
 msgid "E-mail address changed to %(email)s"
 msgstr "E-Mail Adresse geändert in %(email)s"
 
-#: contrib/emailverification/views.py:43
+#: contrib/emailverification/views.py:52
 msgid "Unable to change e-mail address. Confirmation link is invalid."
-msgstr "E-Mail Adresse kann nicht geändert werden. Bestätigungslink ist ungültig."
+msgstr ""
+"E-Mail Adresse kann nicht geändert werden. Bestätigungslink ist ungültig."
 
-#: contrib/profiles/views.py:28
+#: contrib/profiles/views.py:42
 msgid "Profile changed"
 msgstr "Profil aktualisiert"
 
@@ -148,24 +150,25 @@ msgstr "E-Mail Adresse ändern"
 msgid ""
 "We send you a e-mail including a link. Please click the link to\n"
 "        continue changing your e-mail address. Thank you!"
-msgstr "Wir haben Ihnen eine E-Mail mit einem Link zugesandt. Bitte folgen Sie diesem Link, um ihre E-Mail Adresse zu ändern. Danke!"
+msgstr ""
+"Wir haben Ihnen eine E-Mail mit einem Link zugesandt. Bitte folgen Sie "
+"diesem Link, um ihre E-Mail Adresse zu ändern. Danke!"
 
 #: templates/userprofiles/logged_out.html:4
 #: templates/userprofiles/logged_out.html:7
 msgid "Logged out"
 msgstr "Abgemeldet"
 
-#: templates/userprofiles/login.html:4
-#: templates/userprofiles/login.html:7
-#: templates/userprofiles/login.html:15
+#: templates/userprofiles/login.html:5 templates/userprofiles/login.html:8
+#: templates/userprofiles/login.html:16
 msgid "Login"
 msgstr "Anmelden"
 
-#: templates/userprofiles/login.html:17
+#: templates/userprofiles/login.html:18
 msgid "No account? Register here."
 msgstr "Noch kein Konto? Melden Sie sich hier an."
 
-#: templates/userprofiles/login.html:18
+#: templates/userprofiles/login.html:19
 msgid "No Password? Reset your password here."
 msgstr "Passwort vergessen? Setzen Sie Ihr Passwort hier zurück."
 
@@ -200,16 +203,19 @@ msgstr "Ihr Passwort wurde erfolgreich zurückgesetzt."
 
 #: templates/userprofiles/password_reset_confirm.html:21
 msgid "The reset link is invalid. Please double check the link."
-msgstr "Der Passwort-Zurücksetzen-Link ist ungültig. Bitte überprüfen Sie den Link nochmals."
+msgstr ""
+"Der Passwort-Zurücksetzen-Link ist ungültig. Bitte überprüfen Sie den Link "
+"nochmals."
 
 #: templates/userprofiles/password_reset_done.html:10
 msgid ""
 "We send you a e-mail including a link. Please click the\n"
 "        link to continue resetting your password. Thank you!"
-msgstr "Wir haben Ihnen eine E-Mail mit einem Link zugesandt. Bitte folgen Sie diesem Link, um ihr Passwort zurückzusetzen. Danke!"
+msgstr ""
+"Wir haben Ihnen eine E-Mail mit einem Link zugesandt. Bitte folgen Sie "
+"diesem Link, um ihr Passwort zurückzusetzen. Danke!"
 
-#: templates/userprofiles/profile.html:4
-#: templates/userprofiles/profile.html:7
+#: templates/userprofiles/profile.html:4 templates/userprofiles/profile.html:7
 msgid "Your profile"
 msgstr "Ihr Profil"
 
@@ -248,12 +254,15 @@ msgstr "Der Aktivierungscode ist ungültig. Die Aktivierung ist nicht möglich."
 #: templates/userprofiles/registration_complete.html:11
 #, python-format
 msgid ""
-"Your registration was successful. We send you a e-mail including a link.<br />\n"
-"            Please click the link to activate your account. Thank you!<br />\n"
+"Your registration was successful. We send you a e-mail including a link.<br /"
+">\n"
+"            Please click the link to activate your account. Thank you!<br /"
+">\n"
 "            <br />\n"
 "            The link is valid for %(expiration_days)s days."
 msgstr ""
-"Ihre Registrierung war erfolgreich. Wir haben Ihnen eine E-Mail mit einem Link zugesandt.<br />\n"
+"Ihre Registrierung war erfolgreich. Wir haben Ihnen eine E-Mail mit einem "
+"Link zugesandt.<br />\n"
 "Bitte folgen Sie diesem Link, um das Konto zu aktivieren. Danke!<br />\n"
 "<br />\n"
 "Der Link ist %(expiration_days)s Tage gültig."
@@ -338,7 +347,6 @@ msgstr ""
 #~ "\n"
 #~ "                The link is valid for %(expiration_days)s day.\n"
 #~ "            "
-
 #~ msgid_plural ""
 #~ "\n"
 #~ "                The link is valid for %(expiration_days)s days.\n"
