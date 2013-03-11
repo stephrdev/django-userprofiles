@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
 from django.views.generic import FormView, TemplateView
 
 from userprofiles.settings import up_settings

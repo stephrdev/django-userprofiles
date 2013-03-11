@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 
 
 class LoginRequiredMixin(object):
-    """Ensures that user must be authenticated in order to access view.
+    """Ensures that the user is authenticated in order to access the view.
     http://djangosnippets.org/snippets/2442/"""
 
     @method_decorator(login_required)

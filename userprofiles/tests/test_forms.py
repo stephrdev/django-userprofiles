@@ -2,9 +2,9 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.utils import override_settings
 
-from userprofiles.forms import RegistrationForm
 from userprofiles.contrib.accountverification.models import AccountVerification
 from userprofiles.contrib.emailverification.models import EmailVerification
+from userprofiles.forms import RegistrationForm
 
 
 class RegistrationFormTests(TestCase):

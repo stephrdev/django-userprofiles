@@ -11,6 +11,7 @@ class RegistrationActivateView(TemplateView):
     def get_context_data(self, **kwargs):
         activation_key = kwargs['activation_key'].lower()
         account = AccountVerification.objects.activate_user(activation_key)
+
         return {
             'account': account,
             'expiration_days': up_settings.ACCOUNT_VERIFICATION_DAYS

@@ -1,9 +1,9 @@
-from django.db import models
 from django.conf import settings
-from userprofiles.settings import up_settings
-
-from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.models import SiteProfileNotAvailable
+from django.core.exceptions import ImproperlyConfigured
+from django.db import models
+
+from userprofiles.settings import up_settings
 
 try:
     from importlib import import_module
