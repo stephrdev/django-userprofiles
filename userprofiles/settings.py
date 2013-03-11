@@ -51,9 +51,9 @@ def validate_settings():
     if up_settings.USE_ACCOUNT_VERIFICATION and up_settings.AUTO_LOGIN:
         raise ImproperlyConfigured("You cannot use autologin with account verification")
 
-    if not up_settings.USE_PROFILE and 'userprofiles.contrib.profiles' in settings.INSTALLED_APPS:
-        raise ImproperlyConfigured('You need to activate profiles to use '
-            '`userprofiles.contrib.profiles`')
+    if up_settings.USE_PROFILE and 'userprofiles.contrib.profiles' not in settings.INSTALLED_APPS:
+        raise ImproperlyConfigured('You need to add `userprofiles.contrib.profiles` '
+            'to INSTALLED_APPS to use profiles.')
 
     if up_settings.PROFILE_ALLOW_EMAIL_CHANGE and up_settings.CHECK_UNIQUE_EMAIL:
         raise ImproperlyConfigured(

@@ -17,6 +17,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'userprofiles',
+    'userprofiles.contrib.accountverification',
+    'userprofiles.contrib.emailverification',
+    'userprofiles.contrib.profiles',
     'test_project.test_accounts',
 ]
 
