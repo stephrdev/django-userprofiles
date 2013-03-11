@@ -29,15 +29,16 @@ up_settings = Settings(
     USE_ACCOUNT_VERIFICATION=False,
     ACCOUNT_VERIFICATION_DAYS=7,
 
+    USE_EMAIL_VERIFICATION=False,
     EMAIL_VERIFICATION_DAYS=2,
     EMAIL_VERIFICATION_DONE_URL='userprofiles_email_change',
 
     USE_PROFILE=False,
     PROFILE_FORM='userprofiles.contrib.profiles.forms.ProfileForm',
-    INLINE_PROFILE_ADMIN=False,
-
     PROFILE_ALLOW_EMAIL_CHANGE=False,
     PROFILE_CHANGE_DONE_URL='userprofiles_profile_change',
+
+    INLINE_PROFILE_ADMIN=False,
 )
 
 
@@ -60,10 +61,14 @@ def validate_settings():
             'USERPROFILES_PROFILE_ALLOW_EMAIL_CHANGE cannot be activated '
             'when USERPROFILES_CHECK_UNIQUE_EMAIL is active.')
 
-    if (up_settings.PROFILE_ALLOW_EMAIL_CHANGE
-            and 'userprofiles.contrib.emailverification' in settings.INSTALLED_APPS):
+    if (up_settings.USE_EMAIL_VERIFICATION and
+            'userprofiles.contrib.emailverification' not in settings.INSTALLED_APPS):
+        raise ImproperlyConfigured('You need to add `userprofiles.contrib.emailverification` '
+            'to INSTALLED_APPS to use emailverification.')
+
+    if up_settings.PROFILE_ALLOW_EMAIL_CHANGE and up_settings.USE_EMAIL_VERIFICATION:
         raise ImproperlyConfigured(
             'USERPROFILES_PROFILE_ALLOW_EMAIL_CHANGE cannot be activated '
-            'when `userprofiles.contrib.emailverification` is used.')
+            'when USERPROFILES_USE_EMAIL_VERIFICATION is activated.')
 
 validate_settings()

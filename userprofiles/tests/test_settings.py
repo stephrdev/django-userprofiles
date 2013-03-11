@@ -29,6 +29,13 @@ class SettingsTests(TestCase):
     def test_profile_email_check(self):
         self.assertRaises(ImproperlyConfigured, validate_settings)
 
-    @override_settings(USERPROFILES_PROFILE_ALLOW_EMAIL_CHANGE=True)
+    @override_settings(USERPROFILES_USE_EMAIL_VERIFICATION=True,
+        INSTALLED_APPS=list(set(settings.INSTALLED_APPS) - set(
+            ['userprofiles.contrib.emailverification'])))
     def test_email_verification(self):
+        self.assertRaises(ImproperlyConfigured, validate_settings)
+
+    @override_settings(USERPROFILES_USE_EMAIL_VERIFICATION=True,
+        USERPROFILES_PROFILE_ALLOW_EMAIL_CHANGE=True)
+    def test_email_verification_allow_email_change(self):
         self.assertRaises(ImproperlyConfigured, validate_settings)
