@@ -15,6 +15,7 @@ class UtilsTests(TestCase):
 
     @override_settings(USERPROFILES_USE_PROFILE=True)
     def test_get_profile_module_enabled(self):
+        settings.AUTH_PROFILE_MODULE = None
         self.assertRaises(SiteProfileNotAvailable, utils.get_profile_model)
 
         settings.AUTH_PROFILE_MODULE = 'test_project.test_accounts.Profile'

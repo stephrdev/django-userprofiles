@@ -1,26 +1,27 @@
 from datetime import timedelta
+
+from django.contrib.auth.models import User
 from django.test import TestCase
+
 from userprofiles.contrib.accountverification.models import AccountVerification
 from userprofiles.settings import up_settings
 
 
-class ViewTests(TestCase):
+class ModelsTests(TestCase):
     def setUp(self):
         self.data = {
             'username': 'newuser',
             'email': 'newuser@example.com',
-            'email_repeat': 'newuser@example.com',
             'password': 'newuserpass',
-            'password_repeat': 'newuserpass',
-            'first_name': 'New',
-            'last_name': 'User',
         }
 
-    def test_activation(self):
+    def test_activate_user(self):
         user = AccountVerification.objects.create_inactive_user(
             self.data['username'], self.data['password'], self.data['email'])
-        user.date_joined = user.date_joined - timedelta(days=up_settings.ACCOUNT_VERIFICATION_DAYS + 1)
+        user.date_joined = user.date_joined - timedelta(
+            days=up_settings.ACCOUNT_VERIFICATION_DAYS + 1)
         user.save()
+
         verification = AccountVerification.objects.get(user=user)
 
         self.assertFalse(
@@ -36,23 +37,25 @@ class ViewTests(TestCase):
         user = AccountVerification.objects.create_inactive_user(
             self.data['username'], self.data['password'], self.data['email'])
 
+        # Test with inactive user, but not expired
+        AccountVerification.objects.delete_expired_users()
+        self.assertTrue(User.objects.filter(pk=user.pk).exists())
+
+        # Test with active and not expired user
         user.is_active = True
         user.save()
         AccountVerification.objects.delete_expired_users()
+        self.assertTrue(User.objects.filter(pk=user.pk).exists())
 
-        user.date_joined = user.date_joined - timedelta(days=up_settings.ACCOUNT_VERIFICATION_DAYS + 1)
+        # Test with active but expired user
+        user.date_joined = user.date_joined - timedelta(
+            days=up_settings.ACCOUNT_VERIFICATION_DAYS + 1)
         user.save()
         AccountVerification.objects.delete_expired_users()
-        self.assertTrue(AccountVerification.objects.all().exists())
+        self.assertTrue(User.objects.filter(pk=user.pk).exists())
 
+        # Test with expired and inactive user
         user.is_active = False
         user.save()
         AccountVerification.objects.delete_expired_users()
-        self.assertFalse(AccountVerification.objects.all().exists())
-
-    def test_unicode(self):
-        user = AccountVerification.objects.create_inactive_user(
-            self.data['username'], self.data['password'], self.data['email'])
-        self.assertEqual(
-            AccountVerification.objects.get(user=user).__unicode__(),
-            'Account verification: %s' % user.username)
+        self.assertFalse(User.objects.filter(pk=user.pk).exists())

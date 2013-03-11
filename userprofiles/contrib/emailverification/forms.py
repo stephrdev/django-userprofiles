@@ -25,10 +25,7 @@ class ChangeEmailForm(forms.Form):
 
         return new_email
 
-    def save(self, user=None):
-        if not user:
-            return None
-
+    def save(self, user):
         verification = EmailVerification.objects.create(user=user,
             old_email=user.email, new_email=self.cleaned_data['new_email'])
 

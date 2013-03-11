@@ -95,7 +95,7 @@ class RegistrationFormTests(TestCase):
         })
         self.assertTrue(form.is_valid())
 
-        verification = EmailVerification.objects.create(user=self.existing_user,
+        EmailVerification.objects.create(user=self.existing_user,
             old_email=self.existing_user.email, new_email='existingemail2@example.com')
 
         form = RegistrationForm({
@@ -104,8 +104,6 @@ class RegistrationFormTests(TestCase):
             'password': 'password'
         })
         self.assertFalse(form.is_valid())
-
-        verification.delete()
 
     @override_settings(USERPROFILES_DOUBLE_CHECK_EMAIL=True)
     def test_double_check_email(self):
@@ -155,8 +153,6 @@ class RegistrationFormTests(TestCase):
         self.assertEqual(new_user.username, 'test')
         self.assertTrue(new_user.is_active)
 
-        new_user.delete()
-
     @override_settings(USERPROFILES_USE_ACCOUNT_VERIFICATION=True)
     def test_form_save_with_account_verification(self):
         form = RegistrationForm({
@@ -171,9 +167,6 @@ class RegistrationFormTests(TestCase):
         self.assertFalse(new_user.is_active)
 
         self.assertEqual(AccountVerification.objects.count(), 1)
-
-        new_user.delete()
-        AccountVerification.objects.all().delete()
 
     @override_settings(USERPROFILES_REGISTRATION_FULLNAME=True)
     def test_form_save_with_fullname(self):
@@ -192,5 +185,3 @@ class RegistrationFormTests(TestCase):
 
         self.assertEqual(new_user.first_name, 'First')
         self.assertEqual(new_user.last_name, 'Last')
-
-        new_user.delete()

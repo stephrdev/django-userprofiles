@@ -1,5 +1,5 @@
 from django import forms
-from accounts.models import Profile
+from .models import Profile
 
 from userprofiles.forms import RegistrationForm
 
