@@ -6,7 +6,7 @@ from django.views.generic import TemplateView, FormView
 
 from userprofiles.mixins import LoginRequiredMixin
 from userprofiles.settings import up_settings
-from userprofiles.utils import get_form_class
+from userprofiles.utils import get_form_class, get_profile_model
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -26,7 +26,8 @@ class ProfileChangeView(LoginRequiredMixin, FormView):
 
     def get_form_kwargs(self):
         kwargs = super(ProfileChangeView, self).get_form_kwargs()
-        kwargs['instance'] = self.request.user.get_profile()
+        kwargs['instance'] = get_profile_model().objects.get(
+            user=self.request.user)
 
         if up_settings.REGISTRATION_FULLNAME:
             kwargs['initial'].update({
