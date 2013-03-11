@@ -30,7 +30,7 @@ Registration settings
     This app provides a mechanism to verify user accounts by sending an email
     with an activation link. To use the account verification you have to add
     `userprofiles.contrib.accountverification` to your `INSTALLED_APPS` in
-    order toto enable the verification.
+    order to enable the verification.
 
 `USERPROFILES_ACCOUNT_VERIFICATION_DAYS`
     Defines the amount of days a user has to activate his account. Defaults to
@@ -92,6 +92,12 @@ userprofiles.contrib.emailverification
 
 django-userprofiles provides a simple app to do confirmed email address changes.
 (Users have the re-verify their email address after a change)
+
+`USERPROFILES_USE_EMAIL_VERIFICATION`
+    This app provides a mechanism to verify email changes by sending an email
+    with an activation link. To use the email verification you have to add
+    `userprofiles.contrib.emailverification` to your `INSTALLED_APPS` in
+    order to enable the verification.
 
 `USERPROFILES_EMAIL_VERIFICATION_DAYS`
     Defines the number of days a user has time to verify her/his new email
