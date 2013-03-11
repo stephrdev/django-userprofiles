@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
+import hashlib
 import random
 import re
 import uuid
@@ -10,7 +11,6 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.db import models
 from django.template.loader import render_to_string
-from django.utils.hashcompat import sha_constructor
 from django.utils.translation import gettext_lazy as _
 
 from userprofiles.settings import up_settings
@@ -60,8 +60,8 @@ class AccountVerificationManager(models.Manager):
         return new_user
 
     def create_verification(self, user):
-        salt = sha_constructor(str(random.random())).hexdigest()[:5]
-        activation_key = sha_constructor(salt + str(uuid.uuid4())).hexdigest()
+        salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
+        activation_key = hashlib.sha1(salt + str(uuid.uuid4())).hexdigest()
         return self.create(user=user, activation_key=activation_key)
 
     def delete_expired_users(self):
