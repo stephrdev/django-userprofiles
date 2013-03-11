@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime, timedelta
+from datetime import timedelta
 import hashlib
 import random
 import re
@@ -85,11 +85,9 @@ class AccountVerification(models.Model):
         return u'Account verification: %s' % self.user
 
     def activation_key_expired(self):
-	now = timezone.now()
-        now.astimezone(timezone.utc).replace(tzinfo=None)
         expiration_date = timedelta(days=up_settings.ACCOUNT_VERIFICATION_DAYS)
         return (self.activation_key == self.ACTIVATED
-            or (self.user.date_joined + expiration_date <= now))
+            or (self.user.date_joined + expiration_date <= timezone.now()))
     activation_key_expired.boolean = True
 
     class Meta:

@@ -19,7 +19,7 @@ class ModelsTests(TestCase):
         user = AccountVerification.objects.create_inactive_user(
             self.data['username'], self.data['password'], self.data['email'])
         user.date_joined = user.date_joined - timedelta(
-            days=up_settings.ACCOUNT_VERIFICATION_DAYS + 1)
+            days=up_settings.ACCOUNT_VERIFICATION_DAYS, seconds=1)
         user.save()
 
         verification = AccountVerification.objects.get(user=user)
