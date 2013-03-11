@@ -1,40 +1,44 @@
 # -*- coding: utf-8 -*-
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response, render, redirect
-from django.template.context import RequestContext
+from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import TemplateView, FormView
 
 from userprofiles.settings import up_settings
+from userprofiles.mixins import LoginRequiredMixin
 from userprofiles.utils import get_form_class
 
 
-@login_required
-def profile(request):
-    return render_to_response('userprofiles/profile.html', {
-        'user': request.user,
-    }, context_instance=RequestContext(request))
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'userprofiles/profile.html'
+
+    def get_context_data(self, **kwargs):
+        return {
+            'user': self.request.user,
+        }
+
+profile = ProfileView.as_view()
 
 
-@login_required
-def profile_change(request):
-    ProfileForm = get_form_class(up_settings.PROFILE_FORM)
+class ProfileChangeView(LoginRequiredMixin, FormView):
+    form_class = get_form_class(up_settings.PROFILE_FORM)
+    template_name = 'userprofiles/profile_change.html'
 
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES,
-            instance=request.user.get_profile())
-        if form.is_valid():
-            form.save()
-            messages.success(request, _(u'Profile changed'))
-            return redirect(up_settings.PROFILE_CHANGE_DONE_URL)
-    else:
+    def get_form_kwargs(self):
+        kwargs = super(ProfileChangeView, self).get_form_kwargs()
+        kwargs['instance'] = self.request.user.get_profile()
+
         if up_settings.REGISTRATION_FULLNAME:
-            form = ProfileForm(instance=request.user.get_profile(), initial={
-                'first_name': request.user.first_name,
-                'last_name': request.user.last_name,
-                'email': request.user.email
+            kwargs['initial'].update({
+                'first_name': self.request.user.first_name,
+                'last_name': self.request.user.last_name,
+                'email': self.request.user.email
             })
-        else:
-            form = ProfileForm(instance=request.user.get_profile())
+        return kwargs
 
-    return render(request, 'userprofiles/profile_change.html', {'form': form})
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, _(u'Profile changed'))
+        return redirect(up_settings.PROFILE_CHANGE_DONE_URL)
+
+profile_change = ProfileChangeView.as_view()
