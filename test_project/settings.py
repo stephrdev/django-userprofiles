@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'userprofiles',
     'userprofiles.contrib.accountverification',
     'userprofiles.contrib.emailverification',
@@ -28,5 +29,7 @@ TEMPLATE_DIRS = (
 )
 
 ROOT_URLCONF = 'test_project.urls'
+
+SITE_ID = 1
 
 SECRET_KEY = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
