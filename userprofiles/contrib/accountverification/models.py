@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 from django.db import models
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 
 from userprofiles.settings import up_settings
 
@@ -84,9 +85,11 @@ class AccountVerification(models.Model):
         return u'Account verification: %s' % self.user
 
     def activation_key_expired(self):
+	now = timezone.now()
+        now.astimezone(timezone.utc).replace(tzinfo=None)
         expiration_date = timedelta(days=up_settings.ACCOUNT_VERIFICATION_DAYS)
         return (self.activation_key == self.ACTIVATED
-            or (self.user.date_joined + expiration_date <= datetime.now()))
+            or (self.user.date_joined + expiration_date <= now))
     activation_key_expired.boolean = True
 
     class Meta:
