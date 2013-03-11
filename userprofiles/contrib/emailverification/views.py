@@ -36,6 +36,7 @@ email_change_requested = EmailChangeRequestedView.as_view()
 
 
 class EmailChangeApproveView(LoginRequiredMixin, RedirectView):
+    permanent = False
     def get_redirect_url(self, token, code):
         try:
             verification = EmailVerification.objects.get(token=token, code=code,
