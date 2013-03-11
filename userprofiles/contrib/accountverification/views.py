@@ -17,4 +17,3 @@ class RegistrationActivateView(TemplateView):
         }
 
 registration_activate = RegistrationActivateView.as_view()
-

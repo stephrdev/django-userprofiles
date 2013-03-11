@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, FormView
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 from userprofiles.mixins import LoginRequiredMixin
 from userprofiles.utils import get_form_class
 
