@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import TemplateView
 
-from userprofiles import settings as up_settings
 from userprofiles.contrib.accountverification.models import AccountVerification
+from userprofiles.settings import up_settings
 
 
 class RegistrationActivateView(TemplateView):

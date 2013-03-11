@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load url from future %}
 
 {% block title %}{% trans "Login" %}{% endblock %}
 
@@ -14,8 +15,8 @@
         <fieldset class="submit-row">
             <p><button type="submit">{% trans "Login" %}</button></p>
             <ul>
-                <li><a href="{% url userprofiles_registration %}">{% trans "No account? Register here." %}</a></li>
-                <li><a href="{% url auth_password_reset %}">{% trans "No Password? Reset your password here." %}</a></li>
+                <li><a href="{% url 'userprofiles_registration' %}">{% trans "No account? Register here." %}</a></li>
+                <li><a href="{% url 'auth_password_reset' %}">{% trans "No Password? Reset your password here." %}</a></li>
             </ul>
         </fieldset>
     </form>

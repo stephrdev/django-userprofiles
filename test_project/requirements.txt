@@ -1,0 +1,3 @@
+django-discover-runner
+flake8
+coverage

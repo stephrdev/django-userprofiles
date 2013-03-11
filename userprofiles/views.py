@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import FormView, TemplateView
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 from userprofiles.utils import get_form_class
 
 

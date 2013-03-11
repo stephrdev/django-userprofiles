@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView, RedirectView
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 from userprofiles.contrib.emailverification.forms import ChangeEmailForm
 from userprofiles.contrib.emailverification.models import EmailVerification
 from userprofiles.mixins import LoginRequiredMixin

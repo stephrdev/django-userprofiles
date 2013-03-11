@@ -15,4 +15,3 @@ class EmailOrUsernameModelBackend(ModelBackend):
                 return user
         except User.DoesNotExist:
             return None
-

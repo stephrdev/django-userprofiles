@@ -1,12 +1,12 @@
-from django.test import TestCase
-from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from django.test import TestCase
+from django.test.utils import override_settings
 
-from userprofiles import settings as up_settings
+from userprofiles.settings import up_settings
 
 
-class SimpleViewTests(TestCase):
-
+class ViewTests(TestCase):
     def setUp(self):
         self.data = {
             'username': 'newuser',
@@ -24,19 +24,20 @@ class SimpleViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
         response = self.client.post(url, data=self.data)
+
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response,
                              reverse(up_settings.REGISTRATION_REDIRECT))
         self.assertTrue(User.objects.get(username='newuser'))
 
+    @override_settings(USERPROFILES_EMAIL_ONLY=True)
     def test_email_only_registration(self):
-        up_settings.EMAIL_ONLY = True
-
         url = reverse('userprofiles_registration')
         response = self.client.get(url)
 
         self.assertTrue('<input type="hidden" name="username"' in response.content or
-                        '<input id="id_username" name="username" type="hidden" />' in response.content)
+            '<input id="id_username" name="username" type="hidden" />' in response.content)
+
         data = self.data
         data['username'] = ''
 
@@ -47,11 +48,8 @@ class SimpleViewTests(TestCase):
         user = User.objects.get(email=data['email'])
         self.assertNotEqual(user.username, self.data['username'])
 
-        up_settings.EMAIL_ONLY = False
-
+    @override_settings(USERPROFILES_AUTO_LOGIN=True)
     def test_auto_login(self):
-        up_settings.AUTO_LOGIN = True
-
         url = reverse('userprofiles_registration')
         response = self.client.post(url, data=self.data)
         self.assertEqual(response.status_code, 302)
@@ -61,12 +59,8 @@ class SimpleViewTests(TestCase):
         user = User.objects.get(username=self.data['username'])
         self.assertTrue(user.is_authenticated())
 
-        up_settings.AUTO_LOGIN = False
-
+    @override_settings(USERPROFILES_AUTO_LOGIN=True, USERPROFILES_EMAIL_ONLY=True)
     def test_email_and_auto_login(self):
-        up_settings.EMAIL_ONLY = True
-        up_settings.AUTO_LOGIN = True
-
         url = reverse('userprofiles_registration')
         response = self.client.post(url, data=self.data)
         self.assertEqual(response.status_code, 302)
@@ -75,9 +69,6 @@ class SimpleViewTests(TestCase):
 
         user = User.objects.get(email=self.data['email'])
         self.assertTrue(user.is_authenticated())
-
-        up_settings.EMAIL_ONLY = False
-        up_settings.AUTO_LOGIN = False
 
     def test_registration_complete(self):
         """ Simple test to make sure this renders """

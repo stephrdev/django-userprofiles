@@ -12,7 +12,7 @@ setup(
     author='Stephan Jaekel',
     author_email='steph@rdev.info',
     url='https://github.com/stephrdev/django-userprofiles/',
-    packages=find_packages(exclude=['example_project', 'example_project.*']),
+    packages=find_packages(exclude=['test_project', 'test_project.*']),
     package_data = {
         'userprofiles': ['templates/userprofiles/*.html', 'templates/userprofiles/*/*.html',
             'locale/de/LC_MESSAGES/*'],
