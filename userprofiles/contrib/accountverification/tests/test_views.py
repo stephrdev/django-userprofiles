@@ -8,7 +8,7 @@ from django.test.utils import override_settings
 from userprofiles.contrib.accountverification.models import AccountVerification
 
 
-@override_settings(USE_ACCOUNT_VERIFICATION=True)
+@override_settings(USERPROFILES_USE_ACCOUNT_VERIFICATION=True)
 class ViewTests(TestCase):
     def setUp(self):
         self.data = {
@@ -34,6 +34,25 @@ class ViewTests(TestCase):
         url = reverse('userprofiles_registration_activate',
             kwargs={'activation_key': activation_key})
 
+        response = self.client.get(url)
+        self.assertTrue(
+            'We activated your account. You are now able to log in. Have fun!' in
+            response.content)
+
+    @override_settings(USERPROFILES_ACCOUNT_VERIFICATION_SEND_EMAIL_ON_CREATE=False)
+    def test_registration_active(self):
+        user = AccountVerification.objects.create_inactive_user(
+            self.data['username'], self.data['password'], self.data['email'])
+        self.assertEqual(len(mail.outbox), 0)
+        user.accountverification_set.all()[0].send_activation_email()
+        self.assertEqual(len(mail.outbox), 1)
+
+        activation_key_match = re.findall(
+            r'http://example.com/userprofiles/activate/(\w+)',
+            mail.outbox[0].body, re.MULTILINE)
+        activation_key = activation_key_match[0]
+        url = reverse('userprofiles_registration_activate',
+                      kwargs={'activation_key': activation_key})
         response = self.client.get(url)
         self.assertTrue(
             'We activated your account. You are now able to log in. Have fun!' in

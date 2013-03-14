@@ -32,6 +32,12 @@ Registration settings
     `userprofiles.contrib.accountverification` to your `INSTALLED_APPS` in
     order to enable the verification.
 
+`USERPROFILES_ACCOUNT_VERIFICATION_SEND_EMAIL_ON_CREATE`
+    Automatically send an email with the activation link after the registration
+    is done. If disabled, you have to use the `send_activation_email()` method
+    on the AccountVerification instance (which is created automatically when the
+    user is created), to send the activation email.
+
 `USERPROFILES_ACCOUNT_VERIFICATION_DAYS`
     Defines the amount of days a user has to activate his account. Defaults to
     7.

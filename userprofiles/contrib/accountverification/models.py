@@ -45,18 +45,9 @@ class AccountVerificationManager(models.Manager):
         new_user.save()
 
         account_verification = self.create_verification(new_user)
-        current_site = Site.objects.get_current()
 
-        subject = ''.join(render_to_string(
-            'userprofiles/mails/activation_email_subject.html',
-            {'site': current_site}).splitlines())
-
-        message = render_to_string('userprofiles/mails/activation_email.html', {
-            'activation_key': account_verification.activation_key,
-            'expiration_days': up_settings.ACCOUNT_VERIFICATION_DAYS,
-            'site': current_site})
-
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [new_user.email])
+        if up_settings.ACCOUNT_VERIFICATION_SEND_EMAIL_ON_CREATE:
+            account_verification.send_activation_email()
 
         return new_user
 
@@ -83,6 +74,20 @@ class AccountVerification(models.Model):
 
     def __unicode__(self):
         return u'Account verification: %s' % self.user
+
+    def send_activation_email(self):
+        current_site = Site.objects.get_current()
+
+        subject = ''.join(render_to_string(
+            'userprofiles/mails/activation_email_subject.html',
+            {'site': current_site}).splitlines())
+
+        message = render_to_string('userprofiles/mails/activation_email.html', {
+            'activation_key': self.activation_key,
+            'expiration_days': up_settings.ACCOUNT_VERIFICATION_DAYS,
+            'site': current_site})
+
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [self.user.email])
 
     def activation_key_expired(self):
         expiration_date = timedelta(days=up_settings.ACCOUNT_VERIFICATION_DAYS)
