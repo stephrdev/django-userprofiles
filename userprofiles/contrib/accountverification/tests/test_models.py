@@ -1,7 +1,9 @@
 from datetime import timedelta
 
 from django.contrib.auth.models import User
+from django.core import mail
 from django.test import TestCase
+from django.test.utils import override_settings
 
 from userprofiles.contrib.accountverification.models import AccountVerification
 from userprofiles.settings import up_settings
@@ -59,3 +61,17 @@ class ModelsTests(TestCase):
         user.save()
         AccountVerification.objects.delete_expired_users()
         self.assertFalse(User.objects.filter(pk=user.pk).exists())
+
+    def test_create_inactive_user_auto_email(self):
+        AccountVerification.objects.create_inactive_user(
+            self.data['username'], self.data['password'], self.data['email'])
+        self.assertEqual(len(mail.outbox), 1)
+
+    @override_settings(USERPROFILES_ACCOUNT_VERIFICATION_SEND_EMAIL_ON_CREATE=False)
+    def test_create_inactive_user_manual_email(self):
+        user = AccountVerification.objects.create_inactive_user(
+            self.data['username'], self.data['password'], self.data['email'])
+        self.assertEqual(len(mail.outbox), 0)
+
+        user.accountverification_set.get().send_activation_email()
+        self.assertEqual(len(mail.outbox), 1)
