@@ -1,0 +1,6 @@
+[run]
+branch = True
+omit = *test*
+
+[html]
+directory = tests_report/
