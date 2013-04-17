@@ -3,6 +3,9 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.utils import override_settings
 
+from userprofiles.contrib.profiles.forms import ProfileForm
+from userprofiles.utils import get_profile_model
+
 from test_project.test_accounts.models import Profile
 
 
@@ -21,6 +24,11 @@ class ViewTests(TestCase):
         self.user = User.objects.create_user(self.data['username'], self.data['email'],
             self.data['password'])
         Profile(user=self.user).save()
+
+        # Because of the settings change, the cached model in the ModelForm
+        # is None, this only happens because the AUTH_PROFILE_MODULE is None
+        # when starting the tests. We overwrite this attribute.
+        ProfileForm._meta.model = get_profile_model()
 
     def tearDown(self):
         User.objects.get(username=self.data['username']).delete()
