@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.http import Http404
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView, RedirectView
@@ -51,7 +50,7 @@ class EmailChangeApproveView(LoginRequiredMixin, RedirectView):
         except EmailVerification.DoesNotExist:
             messages.error(self.request,
                 _(u'Unable to change e-mail address. Confirmation link is invalid.'))
-            raise Http404
+            return reverse('userprofiles_email_change')
 
         return reverse(up_settings.EMAIL_VERIFICATION_DONE_URL)
 

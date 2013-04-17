@@ -9,7 +9,6 @@ from userprofiles.settings import up_settings
 
 @override_settings(USERPROFILES_USE_PROFILE=False, USERPROFILES_USE_EMAIL_VERIFICATION=True)
 class ViewTests(TestCase):
-
     def setUp(self):
         self.data = {
             'username': 'newuser',
@@ -78,14 +77,14 @@ class ViewTests(TestCase):
             kwargs={'token': verification.token, 'code': 'wrong-code'})
         response = self.client.get(url)
 
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(User.objects.get(pk=self.user.pk).email, self.user.email)
 
         url = reverse('userprofiles_email_change_approve',
             kwargs={'token': 'wrong-token', 'code': verification.code})
         response = self.client.get(url)
 
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(User.objects.get(pk=self.user.pk).email, self.user.email)
 
     def test_email_change_twice(self):

@@ -36,15 +36,16 @@ class EmailVerification(models.Model):
         return '%s - %s/%s' % (self.user, self.old_email, self.new_email)
 
     def save(self, *args, **kwargs):
-        EmailVerification.objects.filter(
-            user=self.user, is_approved=False).update(is_expired=True)
-        if self.is_approved:
+        EmailVerification.objects.exclude(pk=self.pk).filter(user=self.user,
+            is_approved=False).update(is_expired=True)
 
+        if self.is_approved:
             self.is_expired = True
 
             if self.user.email == self.old_email:
                 self.user.email = self.new_email
                 self.user.save()
+
         return super(EmailVerification, self).save(*args, **kwargs)
 
     class Meta:
