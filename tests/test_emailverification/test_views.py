@@ -78,12 +78,36 @@ class ViewTests(TestCase):
             kwargs={'token': verification.token, 'code': 'wrong-code'})
         response = self.client.get(url)
 
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 404)
         self.assertEqual(User.objects.get(pk=self.user.pk).email, self.user.email)
 
         url = reverse('userprofiles_email_change_approve',
             kwargs={'token': 'wrong-token', 'code': verification.code})
         response = self.client.get(url)
 
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 404)
         self.assertEqual(User.objects.get(pk=self.user.pk).email, self.user.email)
+
+    def test_email_change_twice(self):
+        self.client.login(username=self.data['username'], password=self.data['password'])
+
+        self.client.post(reverse('userprofiles_email_change'),
+            {'new_email': 'test@example.com'}, follow=True)
+        self.assertEqual(EmailVerification.objects.filter(user=self.user,
+            is_expired=True).count(), 0)  # No expired requests
+        self.assertEqual(EmailVerification.objects.filter(user=self.user,
+            is_expired=False).count(), 1)  # One active request
+
+        self.client.post(reverse('userprofiles_email_change'),
+            {'new_email': 'test2@example.com'}, follow=True)
+        self.assertEqual(EmailVerification.objects.filter(user=self.user,
+            is_expired=True).count(), 1)  # One expired request
+        self.assertEqual(EmailVerification.objects.filter(user=self.user,
+            is_expired=False).count(), 1)  # One active request
+
+        self.client.post(reverse('userprofiles_email_change'),
+            {'new_email': 'test3@example.com'}, follow=True)
+        self.assertEqual(EmailVerification.objects.filter(user=self.user,
+            is_expired=True).count(), 2)  # Two expired requests
+        self.assertEqual(EmailVerification.objects.filter(user=self.user,
+            is_expired=False).count(), 1)  # One active request
